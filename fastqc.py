@@ -151,7 +151,7 @@ def main(args):
     len_reads = calculate_len_reads(files)
     create_machine_read_results(
         files, quality, num_reads, len_reads, args.comp)
-
+    create_human_read_results()
 
 # pathlib package
 # logging more intensly
