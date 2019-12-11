@@ -66,6 +66,7 @@ def calculate_average_quality_score(files):
             logger.warning(
                 "One or more of your reads have a average quality score of 20 or lower")
     return average_qual_scores
+    print(average_qual_scores[1])
     logger.info("The ave qual score is: " + str(average_qual_scores))
 
 # calculates the number of reads 
@@ -97,7 +98,7 @@ def create_machine_read_results(files, quality, num_reads, len_reads, comp):
     len_reads.sort()
     tab_list = []
     for item in files:
-        filename = quality[0]
+        filename = quality[0][0]
         qual_score = quality[1]
         count_read = num_reads[1]
         mean_read = len_reads[1][0]
