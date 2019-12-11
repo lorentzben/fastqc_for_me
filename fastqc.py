@@ -102,12 +102,13 @@ def calculate_len_reads(files):
 
 
 def create_machine_read_results(files, quality, num_reads, len_reads, comp):
-    print("sorting based on filename")
+    logging.info("sorting based on filename")
     files.sort()
     quality.sort()
     num_reads.sort()
     len_reads.sort()
     tab_list = []
+    #pulls out one read at a time adds to a list
     for i in range(0, len(files)):
         filename = quality[i][0].name
         qual_score = quality[i][1]
@@ -116,7 +117,7 @@ def create_machine_read_results(files, quality, num_reads, len_reads, comp):
         med_read = len_reads[i][1][1]
         tab_list.append(
             [filename, qual_score, count_read, mean_read, med_read])
-
+    #headers for the table
     headers = ['name', 'ave qual score',
                'read count', 'ave read len', 'med read len']
     table = numpy.array(headers)
@@ -127,21 +128,25 @@ def create_machine_read_results(files, quality, num_reads, len_reads, comp):
        # writes python object into serialized json file
         listed_table = table_with_headings.tolist()
         json.dump(listed_table, codecs.open('table.json', 'w', encoding='utf-8'), separators=(',', ':'), sort_keys=True, indent=4)
-
+    return table_with_headings
 
 def create_human_read_results():
     # parses a python object from json
     table_text = codecs.open('table.json', 'r', encoding='utf-8').read()
     table_list = json.loads(table_text)
     table = numpy.array(table_list)
-
+    #writes out the table to console
     print(numpy.array2string(table).replace('[[', '[').replace(']]', ']'))
 
 
-def check_quality_cutoffs():
+def check_quality_cutoffs(table):
     print("reads passed/failed cuttoffs")
-    # TODO find what these standards should be for 16s
-
+    # qual 20-40, len 153-200
+    for item in table:
+        if item[1] <= 20:
+            logging.warning("quality score of %i is less than 20" % item[0])
+        if item[3] < 150 OR item[3] > 200:
+            logging.warning("quality read len of %s is under 150 or over 200" % item[0])
 
 def main(args):
     set_up_logger(args.quiet)
@@ -149,10 +154,11 @@ def main(args):
     quality = calculate_average_quality_score(files)
     num_reads = calculate_num_reads(files)
     len_reads = calculate_len_reads(files)
-    create_machine_read_results(
+    table = create_machine_read_results(
         files, quality, num_reads, len_reads, args.comp)
     if not args.silent:
         create_human_read_results()
+    check_quality_cutoffs(table)
 
 # pathlib package
 # logging more intensly
