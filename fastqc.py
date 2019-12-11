@@ -143,13 +143,15 @@ def check_quality_cutoffs(table):
     print("reads passed/failed cuttoffs")
     # qual 20-40, len 153-200
     for item in table:
+        logger.info(item)
+        '''
         if float(item[1]) <= 20:
             logging.warning("quality score of %i is less than 20" % item[0])
         if (float(item[3]) < 150):
              logging.warning("quality read len of %s is under 150" % item[0])
         if (float(item[3]) > 200):
             logging.warning("quality read len of %g is over 200" % item[0])
-
+        '''
 def main(args):
     set_up_logger(args.quiet)
     files = make_list_of_fastqs()
