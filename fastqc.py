@@ -154,6 +154,7 @@ def check_quality_cutoffs(table):
         
 def main(args):
     set_up_logger(args.quiet)
+    logger.critical("validate that the qual check is working")
     files = make_list_of_fastqs()
     quality = calculate_average_quality_score(files)
     num_reads = calculate_num_reads(files)
@@ -163,6 +164,7 @@ def main(args):
     if not args.silent:
         create_human_read_results()
     check_quality_cutoffs(table)
+    
 
 # pathlib package
 # logging more intensly
