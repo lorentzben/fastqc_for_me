@@ -91,10 +91,10 @@ def calculate_len_reads(files):
 # forms pythoon object writes out to file
 def create_machine_read_results(files, quality, num_reads, len_reads, comp):
     print("sorting based on filename")
-    files.sort(key=operator.itemgetter(0))
-    quality.sort(key=operator.itemgetter(0))
-    num_reads.sort(key=operator.itemgetter(0))
-    len_reads.sort(key=operator.itemgetter(0))
+    files.sort()
+    quality.sort()
+    num_reads.sort()
+    len_reads.sort()
     tab_list = []
     for item in files:
         filename = quality[0]
