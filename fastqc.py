@@ -128,7 +128,7 @@ def create_machine_read_results(files, quality, num_reads, len_reads, comp):
        # writes python object into serialized json file
         listed_table = table_with_headings.tolist()
         json.dump(listed_table, codecs.open('table.json', 'w', encoding='utf-8'), separators=(',', ':'), sort_keys=True, indent=4)
-    return table_with_headings
+    return numpy.array(tab_list)
 
 def create_human_read_results():
     # parses a python object from json
