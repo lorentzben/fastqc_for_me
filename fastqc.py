@@ -133,7 +133,7 @@ def create_human_read_results():
     # parses a python object from json
     table_text = codecs.open('table.json', 'r', encoding='utf-8').read()
     table_list = json.loads(table_text)
-    table = np.array(table_list)
+    table = numpy.array(table_list)
 
     print(numpy.array2string(table).replace('[[', '[').replace(']]', ']'))
 
