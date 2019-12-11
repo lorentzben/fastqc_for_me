@@ -113,7 +113,7 @@ def create_machine_read_results(files, quality, num_reads, len_reads, comp):
     table = numpy.array(headers)
     table_with_headings = numpy.append(table , numpy.array(tab_list))
     logging.info(numpy.array2string(table_with_headings).replace('[[','[').replace(']]',']'))
-    if comp:
+    if not comp:
         with open ('table.json','w') as handle:
             handle.write(json.dumps(table))
         
