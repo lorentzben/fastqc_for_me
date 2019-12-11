@@ -64,13 +64,15 @@ def calculate_average_quality_score(files):
             logger.warning(
                 "One or more of your reads have a average quality score of 20 or lower")
     return average_qual_scores
-    logger.info("The ave qual score is: ")
+    logger.info("The ave qual score is: " + str(average_qual_scores))
 
 def calculate_num_reads(files):
-    num_table = [] 
+    num_table = []
+    logger.info("calculating the number of reads") 
     for file in files:
         records = list(SeqIO.parse(file, "fastq"))
         num_table.append((file, len(records)))
+    logger.info("table ocunting the number of reads :",str(num_table))
     return num_table
 
 def calculate_len_reads():
