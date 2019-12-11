@@ -109,11 +109,9 @@ def create_machine_read_results(files, quality, num_reads, len_reads, comp):
         tab_list.append([filename,qual_score,count_read,mean_read,med_read])
     
 
-    headers = ['name','average qual score', 'read count', 'average read len', 'median read len']
+    headers = ['name','ave qual score', 'read count', 'ave read len', 'med read len']
     table = numpy.array(headers)
     table_with_headings = numpy.append(table , numpy.array(tab_list))
-    #pretty_table = tabulate(table, headers=headers, tablefmt='fancy_grid')
-    #print(pretty_table)
     print(numpy.array2string(table_with_headings).replace('[[','[').replace(']]',']'))
     if comp:
         print("write out to .txt")
