@@ -6,8 +6,8 @@ from pathlib import Path
 import argparse
 from Bio import SeqIO
 import numpy
-#from tabulate import tabulate
-import operator 
+import operator
+import json 
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -112,14 +112,19 @@ def create_machine_read_results(files, quality, num_reads, len_reads, comp):
     headers = ['name','ave qual score', 'read count', 'ave read len', 'med read len']
     table = numpy.array(headers)
     table_with_headings = numpy.append(table , numpy.array(tab_list))
-    print(numpy.array2string(table_with_headings).replace('[[','[').replace(']]',']'))
+    logging.info(numpy.array2string(table_with_headings).replace('[[','[').replace(']]',']'))
     if comp:
-        print("write out to .txt")
+        with open ('table.json') as handle:
+            handle.write(json.dump(table))
+        
     
-'''
+
 def create_human_read_results(files, num_reads, len_reads, OR machine object):
-    print('ugh')
-'''
+    with open ('table.json') as opener:
+        table = opener.readlines()
+    print(numpy.array2string(table).replace('[[','[').replace(']]',']'))
+
+
 def check_quality_cutoffs():
     print("reads passed/failed cuttoffs")
     # TODO find what these standards should be for 16s
