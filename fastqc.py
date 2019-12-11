@@ -6,6 +6,8 @@ from pathlib import Path
 import argparse
 from Bio import SeqIO
 import numpy
+from tabulate import tabulate
+import operator 
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -33,7 +35,7 @@ console_logger.setFormatter(formatter)
 logger.addHandler(file_logger)
 logger.addHandler(console_logger)
 
-
+# creates a list with path to fastq files in current dir
 def make_list_of_fastqs():
     current_dir = Path('.')
     fastqs = list(current_dir.glob('*.fastq'))
@@ -54,7 +56,7 @@ def calculate_average_quality_score(files):
             quals = record.letter_annotations["phred_quality"]
         average_qual_scores.append(
             (read, numpy.around(numpy.mean(quals), decimals=0)))
-
+    #checks to see if qual score is less than 20 
     for score in average_qual_scores:
         if score[1] >= 20:
             logger.info(
@@ -66,7 +68,7 @@ def calculate_average_quality_score(files):
     return average_qual_scores
     logger.info("The ave qual score is: " + str(average_qual_scores))
 
-
+# calculates the number of reads 
 def calculate_num_reads(files):
     num_table = []
     logger.info("calculating the number of reads")
@@ -76,7 +78,7 @@ def calculate_num_reads(files):
     logger.info("table counting the number of reads :" + str(num_table))
     return num_table
 
-
+#calculates the length of reads as well as mean and median 
 def calculate_len_reads(files):
     len_table = []
     logger.info("calculating the length of reads")
@@ -86,9 +88,34 @@ def calculate_len_reads(files):
     logger.info("table with read, mean, median of len of reads: " + str(len_table))
     return len_table
 
+# forms pythoon object writes out to file
+def create_machine_read_results(files, quality, num_reads, len_reads, comp):
+    print("sorting based on filename")
+    files.sort(key=operator.itemgetter(0))
+    quality.sort(key=operator.itemgetter(0))
+    num_reads.sort(key=operator.itemgetter(0))
+    len_reads.sort(key=operator.itemgetter(0))
+    tab_list = []
+    for item in files:
+        filename = quality[0]
+        qual_score = quality[1]
+        count_read = num_reads[1]
+        mean_read = len_reads[1][0]
+        med_read = len_reads[1][1]
+        tab_list.append([filename,qual_score,count_read,mean_read,med_read])
+    
 
-def create_machine_read_results():
-    print("created machine readable results here: ")
+
+    table = np.array(tab_list)
+    headers = ['name','average qual score', 'read count', 'average read len', 'median read len']
+    pretty_table = tabulate(table, headers=headers, tablefmt='fancy_grid')
+    print(pretty_table)
+    if comp:
+        print("write out to .txt")
+    
+
+def create_human_read_results(files, num_reads, len_reads, OR machine object):
+
 
 def check_quality_cutoffs():
     print("reads passed/failed cuttoffs")
@@ -101,7 +128,8 @@ def main(args):
     quality = calculate_average_quality_score(files)
     num_reads = calculate_num_reads(files)
     len_reads = calculate_len_reads(files)
-    logger.info("Hi")
+    create_machine_read_results(files, quality, num_reads, len_reads)
+    
 
 # pathlib package
 # logging more intensly
