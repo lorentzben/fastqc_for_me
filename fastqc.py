@@ -100,12 +100,12 @@ def create_machine_read_results(files, quality, num_reads, len_reads, comp):
     num_reads.sort()
     len_reads.sort()
     tab_list = []
-    for item in files:
-        filename = quality[0][0]
-        qual_score = quality[1]
-        count_read = num_reads[1]
-        mean_read = len_reads[1][0]
-        med_read = len_reads[1][1]
+    for i in range(0, len(files)):
+        filename = quality[i][0]
+        qual_score = quality[i][1]
+        count_read = num_reads[i][1]
+        mean_read = len_reads[i][1][0]
+        med_read = len_reads[i][1][1]
         tab_list.append([filename,qual_score,count_read,mean_read,med_read])
     
 
