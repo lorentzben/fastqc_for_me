@@ -3,6 +3,7 @@ import subprocess
 import os
 import logging
 from pathlib import Path
+import argparse
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -30,6 +31,7 @@ console_logger.setFormatter(formatter)
 logger.addHandler(file_logger)
 logger.addHandler(console_logger)
 
+
 def make_list_of_fastqs():
     current_dir = Path('.')
     fastqs = list(p.glob('*.fastq'))
@@ -40,23 +42,25 @@ def make_list_of_fastqs():
 def calculate_average_quality_score(files):
 
     # will hold tuples of seq name and average qual score
-    average_qual_scores=[]
+    average_qual_scores = []
     # creates a list of quality scores and appends it to a list
 
     logger.info("Calculating average quality score of reads and adding to list")
     for read in files:
         for record in SeqIO.parse(read, "fastq"):
 
-            quals=record.letter_annotations["phred_quality"]
+            quals = record.letter_annotations["phred_quality"]
         average_qual_scores.append(
             (read, numpy.around(numpy.mean(quals), decimals=0)))
-    
-    for score in average_qual_scores :
-        if score[1] >= 20 :
-            logger.info("All .fastq reads examined are over phread score of 20")
+
+    for score in average_qual_scores:
+        if score[1] >= 20:
+            logger.info(
+                "All .fastq reads examined are over phread score of 20")
             pass
         else:
-            logger.warning("One or more of your reads have a average quality score of 20 or lower")
+            logger.warning(
+                "One or more of your reads have a average quality score of 20 or lower")
     return average_qual_scores
     logger.info("The ave qual score is: ")
 
@@ -90,8 +94,7 @@ def main(args):
 
 if __name__ == "__main__":
     # Build Argument Parser in order to facilitate ease of use for user
-    parser = argparse.ArgumentParser(
-        description="Perform Automated Analysis and Formatting of Sequence Data")
+    parser = argparse.ArgumentParser(description="Perform Automated Analysis and Formatting of Sequence Data")
     parser.add_argument('-r', '--readable', action='store_true', default=True,
                         help='creates a human readable output of the quality assesment', dest='human')
     parser.add_argument('-f', '--no-file', action='store_true', default=False,
