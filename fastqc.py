@@ -129,7 +129,7 @@ def main(args):
     quality = calculate_average_quality_score(files)
     num_reads = calculate_num_reads(files)
     len_reads = calculate_len_reads(files)
-    create_machine_read_results(files, quality, num_reads, len_reads)
+    create_machine_read_results(files, quality, num_reads, len_reads, args.comp)
     
 
 # pathlib package
