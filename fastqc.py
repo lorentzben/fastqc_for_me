@@ -125,7 +125,7 @@ def create_machine_read_results(files, quality, num_reads, len_reads, comp):
         '[[', '[').replace(']]', ']'))
     if not comp:
        # writes python object into serialized json file
-        listed_table = table.tolist()
+        listed_table = table_with_headings.tolist()
         json.dump(listed_table, codecs.open('table.json', 'w', encoding='utf-8'), separators=(',', ':'), sort_keys=True, indent=4)
 
 
