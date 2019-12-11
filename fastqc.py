@@ -115,7 +115,7 @@ def create_machine_read_results(files, quality, num_reads, len_reads, comp):
     
 
 def create_human_read_results(files, num_reads, len_reads, OR machine object):
-
+    print('ugh')
 
 def check_quality_cutoffs():
     print("reads passed/failed cuttoffs")
