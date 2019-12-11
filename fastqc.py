@@ -5,6 +5,7 @@ import logging
 from pathlib import Path
 import argparse
 from Bio import SeqIO
+import numpy
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
