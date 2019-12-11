@@ -151,7 +151,8 @@ def main(args):
     len_reads = calculate_len_reads(files)
     create_machine_read_results(
         files, quality, num_reads, len_reads, args.comp)
-    create_human_read_results()
+    if not args.silent:
+        create_human_read_results()
 
 # pathlib package
 # logging more intensly
@@ -161,8 +162,8 @@ if __name__ == "__main__":
     # Build Argument Parser in order to facilitate ease of use for user
     parser = argparse.ArgumentParser(
         description="Perform Automated Analysis and Formatting of Sequence Data")
-    parser.add_argument('-r', '--readable', action='store_true', default=True,
-                        help='creates a human readable output of the quality assesment', dest='human')
+    parser.add_argument('-s', '--silent', action='store_true', default=False,
+                        help='does not create a human readable copy of the table only writes to file', dest='silent')
     parser.add_argument('-f', '--no-file', action='store_true', default=False,
                         help='does not create a computer readable file must use -r flag for human readability', dest='comp')
     parser.add_argument('-q', '--quiet', action='store_true', default=False,
