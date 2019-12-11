@@ -111,7 +111,7 @@ def create_machine_read_results(files, quality, num_reads, len_reads, comp):
 
     headers = ['name','average qual score', 'read count', 'average read len', 'median read len']
     table = numpy.array(headers)
-    table_with_headings = numpy.append(tables , numpy.array(tab_list), axis=1)
+    table_with_headings = numpy.append(table , numpy.array(tab_list), axis=1)
     #pretty_table = tabulate(table, headers=headers, tablefmt='fancy_grid')
     #print(pretty_table)
     print(numpy.array2string(table_with_headings).replace('[[','[').replace(']]',']'))
