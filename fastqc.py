@@ -66,24 +66,29 @@ def calculate_average_quality_score(files):
     return average_qual_scores
     logger.info("The ave qual score is: " + str(average_qual_scores))
 
+
 def calculate_num_reads(files):
     num_table = []
-    logger.info("calculating the number of reads") 
+    logger.info("calculating the number of reads")
     for file in files:
         records = list(SeqIO.parse(file, "fastq"))
         num_table.append((file, len(records)))
-    logger.info("table counting the number of reads :" +str(num_table))
+    logger.info("table counting the number of reads :" + str(num_table))
     return num_table
 
-def calculate_len_reads():
-    print("")
+
+def calculate_len_reads(files):
+    len_table = []
+    logger.info("calculating the length of reads")
+    for file in files:
+        length = [len(record) for record in SeqIO.parse(file, "fastq")]
+        len_table.append((file,(numpy.mean(length),numpy.median(length))))
+    logger.info("table with read, mean, median of len of reads: " + len_table)
+    return len_table
+
+
 def create_machine_read_results():
     print("created machine readable results here: ")
-
-
-def move_html_results():
-    print("moved html copy of results here: ")
-
 
 def check_quality_cutoffs():
     print("reads passed/failed cuttoffs")
@@ -94,7 +99,8 @@ def main(args):
     set_up_logger(args.quiet)
     files = make_list_of_fastqs()
     quality = calculate_average_quality_score(files)
-    print(calculate_num_reads(files))
+    num_reads = calculate_num_reads(files)
+    len_reads = calculate_len_reads(files)
     logger.info("Hi")
 
 # pathlib package
@@ -103,7 +109,8 @@ def main(args):
 
 if __name__ == "__main__":
     # Build Argument Parser in order to facilitate ease of use for user
-    parser = argparse.ArgumentParser(description="Perform Automated Analysis and Formatting of Sequence Data")
+    parser = argparse.ArgumentParser(
+        description="Perform Automated Analysis and Formatting of Sequence Data")
     parser.add_argument('-r', '--readable', action='store_true', default=True,
                         help='creates a human readable output of the quality assesment', dest='human')
     parser.add_argument('-f', '--no-file', action='store_true', default=False,
