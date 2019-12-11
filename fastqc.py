@@ -119,7 +119,7 @@ def create_machine_read_results(files, quality, num_reads, len_reads, comp):
         
     
 
-def create_human_read_results(files, num_reads, len_reads, OR machine object):
+def create_human_read_results():
     with open ('table.json') as opener:
         table = opener.readlines()
     print(numpy.array2string(table).replace('[[','[').replace(']]',']'))
