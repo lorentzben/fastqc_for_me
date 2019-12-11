@@ -66,7 +66,7 @@ def calculate_average_quality_score(files):
             logger.warning(
                 "One or more of your reads have a average quality score of 20 or lower")
     for item in average_qual_scores:
-        logger.critical(item[1])
+        logger.debug(item[1])
     
     logger.info("The ave qual score is: " + str(average_qual_scores))
     return average_qual_scores
@@ -120,7 +120,7 @@ def create_machine_read_results(files, quality, num_reads, len_reads, comp):
     
 
 def create_human_read_results():
-    with open ('table.json') as opener:
+    with open ('table.json','w') as opener:
         table = opener.readlines()
     print(numpy.array2string(table).replace('[[','[').replace(']]',']'))
 
