@@ -66,10 +66,15 @@ def calculate_average_quality_score(files):
     return average_qual_scores
     logger.info("The ave qual score is: ")
 
+def calculate_num_reads(files):
+    num_table = [] 
+    for file in files:
+        records = list(SeqIO.parse(file, "fastq"))
+        num_table.append((file, len(records)))
+    return num_table
 
-def call_fastqc():
-    print("fastqc run finished")
-
+def calculate_len_reads():
+ 
 
 def create_machine_read_results():
     print("created machine readable results here: ")
@@ -87,7 +92,8 @@ def check_quality_cutoffs():
 def main(args):
     set_up_logger(args.quiet)
     files = make_list_of_fastqs()
-    print(calculate_average_quality_score(files))
+    quality = calculate_average_quality_score(files)
+    print(calculate_num_reads(files))
     logger.info("Hi")
 
 # pathlib package
