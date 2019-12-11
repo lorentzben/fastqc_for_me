@@ -6,7 +6,7 @@ from pathlib import Path
 import argparse
 from Bio import SeqIO
 import numpy
-from tabulate import tabulate
+#from tabulate import tabulate
 import operator 
 
 logger = logging.getLogger(__name__)
@@ -108,8 +108,9 @@ def create_machine_read_results(files, quality, num_reads, len_reads, comp):
 
     table = np.array(tab_list)
     headers = ['name','average qual score', 'read count', 'average read len', 'median read len']
-    pretty_table = tabulate(table, headers=headers, tablefmt='fancy_grid')
-    print(pretty_table)
+    #pretty_table = tabulate(table, headers=headers, tablefmt='fancy_grid')
+    #print(pretty_table)
+    print(numpy.array2string(table).replace('[[','[').replace(']]',']'))
     if comp:
         print("write out to .txt")
     
