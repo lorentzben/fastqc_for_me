@@ -65,8 +65,9 @@ def calculate_average_quality_score(files):
         else:
             logger.warning(
                 "One or more of your reads have a average quality score of 20 or lower")
+    for item in average_qual_scores:
+        logger.debug(item[0])
     
-    print(average_qual_scores[1])
     logger.info("The ave qual score is: " + str(average_qual_scores))
     return average_qual_scores
     
