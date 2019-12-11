@@ -74,8 +74,7 @@ def calculate_num_reads(files):
     return num_table
 
 def calculate_len_reads():
- 
-
+    print("")
 def create_machine_read_results():
     print("created machine readable results here: ")
 
