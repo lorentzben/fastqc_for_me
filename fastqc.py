@@ -7,7 +7,8 @@ import argparse
 from Bio import SeqIO
 import numpy
 import operator
-import json 
+import json
+import codecs
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -36,6 +37,8 @@ logger.addHandler(file_logger)
 logger.addHandler(console_logger)
 
 # creates a list with path to fastq files in current dir
+
+
 def make_list_of_fastqs():
     current_dir = Path('.')
     fastqs = list(current_dir.glob('*.fastq'))
@@ -56,7 +59,7 @@ def calculate_average_quality_score(files):
             quals = record.letter_annotations["phred_quality"]
         average_qual_scores.append(
             (read, numpy.around(numpy.mean(quals), decimals=0)))
-    #checks to see if qual score is less than 20 
+    # checks to see if qual score is less than 20
     for score in average_qual_scores:
         if score[1] >= 20:
             logger.info(
@@ -67,12 +70,12 @@ def calculate_average_quality_score(files):
                 "One or more of your reads have a average quality score of 20 or lower")
     for item in average_qual_scores:
         logger.debug(item[1])
-    
+
     logger.info("The ave qual score is: " + str(average_qual_scores))
     return average_qual_scores
-    
 
-# calculates the number of reads 
+
+# calculates the number of reads
 def calculate_num_reads(files):
     num_table = []
     logger.info("calculating the number of reads")
@@ -82,17 +85,22 @@ def calculate_num_reads(files):
     logger.info("table counting the number of reads :" + str(num_table))
     return num_table
 
-#calculates the length of reads as well as mean and median 
+# calculates the length of reads as well as mean and median
+
+
 def calculate_len_reads(files):
     len_table = []
     logger.info("calculating the length of reads")
     for file in files:
         length = [len(record) for record in SeqIO.parse(file, "fastq")]
-        len_table.append((file,(numpy.mean(length),numpy.median(length))))
-    logger.info("table with read, mean, median of len of reads: " + str(len_table))
+        len_table.append((file, (numpy.mean(length), numpy.median(length))))
+    logger.info(
+        "table with read, mean, median of len of reads: " + str(len_table))
     return len_table
 
 # forms pythoon object writes out to file
+
+
 def create_machine_read_results(files, quality, num_reads, len_reads, comp):
     print("sorting based on filename")
     files.sort()
@@ -106,23 +114,28 @@ def create_machine_read_results(files, quality, num_reads, len_reads, comp):
         count_read = num_reads[i][1]
         mean_read = len_reads[i][1][0]
         med_read = len_reads[i][1][1]
-        tab_list.append([filename,qual_score,count_read,mean_read,med_read])
-    
+        tab_list.append(
+            [filename, qual_score, count_read, mean_read, med_read])
 
-    headers = ['name','ave qual score', 'read count', 'ave read len', 'med read len']
+    headers = ['name', 'ave qual score',
+               'read count', 'ave read len', 'med read len']
     table = numpy.array(headers)
-    table_with_headings = numpy.append(table , numpy.array(tab_list))
-    logging.info(numpy.array2string(table_with_headings).replace('[[','[').replace(']]',']'))
+    table_with_headings = numpy.append(table, numpy.array(tab_list))
+    logging.info(numpy.array2string(table_with_headings).replace(
+        '[[', '[').replace(']]', ']'))
     if not comp:
-        with open ('table.json','w') as handle:
-            handle.write(json.dumps(table))
-        
-    
+       # writes python object into serialized json file
+        listed_table = table.tolist()
+        json.dump(listed_table, codecs.open('table.json', 'w'encoding='utf-8'), separators=(',', ':'), sort_keys=True, indent=4)
+
 
 def create_human_read_results():
-    with open ('table.json') as opener:
-        table = opener.readlines()
-    print(numpy.array2string(table).replace('[[','[').replace(']]',']'))
+    # parses a python object from json
+    table_text = codecs.open('table.json', 'r', encoding='utf-8').read()
+    table_list = json.loads(table_text)
+    table = np.array(table_list)
+
+    print(numpy.array2string(table).replace('[[', '[').replace(']]', ']'))
 
 
 def check_quality_cutoffs():
@@ -136,8 +149,9 @@ def main(args):
     quality = calculate_average_quality_score(files)
     num_reads = calculate_num_reads(files)
     len_reads = calculate_len_reads(files)
-    create_machine_read_results(files, quality, num_reads, len_reads, args.comp)
-    
+    create_machine_read_results(
+        files, quality, num_reads, len_reads, args.comp)
+
 
 # pathlib package
 # logging more intensly
