@@ -72,7 +72,7 @@ def calculate_num_reads(files):
     for file in files:
         records = list(SeqIO.parse(file, "fastq"))
         num_table.append((file, len(records)))
-    logger.info("table ocunting the number of reads :",str(num_table))
+    logger.info("table counting the number of reads :" +str(num_table))
     return num_table
 
 def calculate_len_reads():
