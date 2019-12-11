@@ -83,7 +83,7 @@ def calculate_len_reads(files):
     for file in files:
         length = [len(record) for record in SeqIO.parse(file, "fastq")]
         len_table.append((file,(numpy.mean(length),numpy.median(length))))
-    logger.info("table with read, mean, median of len of reads: " + len_table)
+    logger.info("table with read, mean, median of len of reads: " + str(len_table))
     return len_table
 
 
