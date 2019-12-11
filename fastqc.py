@@ -34,7 +34,7 @@ logger.addHandler(console_logger)
 
 def make_list_of_fastqs():
     current_dir = Path('.')
-    fastqs = list(p.glob('*.fastq'))
+    fastqs = list(current_dir.glob('*.fastq'))
     logger.info("The fastq files found are: " + str(fastqs))
     return fastqs
 
