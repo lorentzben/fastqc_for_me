@@ -145,7 +145,7 @@ def check_quality_cutoffs(table):
     for item in table:
         if item[1] <= 20:
             logging.warning("quality score of %i is less than 20" % item[0])
-        if item[3] < 150 OR item[3] > 200:
+        if (item[3] < 150) OR if (item[3] > 200):
             logging.warning("quality read len of %s is under 150 or over 200" % item[0])
 
 def main(args):
