@@ -113,10 +113,10 @@ def create_machine_read_results(files, quality, num_reads, len_reads, comp):
     if comp:
         print("write out to .txt")
     
-
+'''
 def create_human_read_results(files, num_reads, len_reads, OR machine object):
     print('ugh')
-
+'''
 def check_quality_cutoffs():
     print("reads passed/failed cuttoffs")
     # TODO find what these standards should be for 16s
