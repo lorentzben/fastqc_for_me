@@ -16,8 +16,8 @@ class TestFastQCMethods(unittest.TestCase):
     def test_make_list_of_fastqs(self):
         cwd = Path('.')
         test_dir = cwd.joinpath('test_fastq_files')
-        os.chdir(test_dir)
-        print(Path('.'))
+        os.chdir(test_dir.resolve())
+        
         expected_fastqs = ['bad_q_good_l.read1.fq', 'bad_q_long_l.read2.fq', 'good_q_good_l.read1.fq', 'good_q_long_l.read2.fq',
                            'bad_q_good_l.read2.fq',  'bad_q_short_l.read1.fq',  'good_q_good_l.read2.fq',  'good_q_short_l.read1.fq',
                            'bad_q_long_l.read1.fq',  'bad_q_short_l.read2.fq', 'good_q_long_l.read1.fq',  'good_q_short_l.read2.fq']
