@@ -19,7 +19,7 @@ class TestFastQCMethods(unittest.TestCase):
         expected_fastqs = ['bad_q_good_l.read1.fq', 'bad_q_long_l.read2.fq', 'good_q_good_l.read1.fq', 'good_q_long_l.read2.fq',
                            'bad_q_good_l.read2.fq',  'bad_q_short_l.read1.fq',  'good_q_good_l.read2.fq',  'good_q_short_l.read1.fq',
                            'bad_q_long_l.read1.fq',  'bad_q_short_l.read2.fq', 'good_q_long_l.read1.fq',  'good_q_short_l.read2.fq']
-        testing = fastqc.make_list_of_fastqs
+        testing = fastqc.make_list_of_fastqs()
         
         self.assertEqual(expected_fastqs,testing)
 
