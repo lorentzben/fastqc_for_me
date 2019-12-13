@@ -6,7 +6,7 @@ from pathlib import Path
 
 class TestFastQCMethods(unittest.TestCase):
     def setUp(self):
-        cwd = Path('.')
+        self.cwd = Path('.')
 
     def test(self):
         test_dir = cwd / 'test_fastq_files'
