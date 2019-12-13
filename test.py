@@ -18,9 +18,9 @@ class TestFastQCMethods(unittest.TestCase):
         test_dir = cwd.joinpath('test_fastq_files')
         os.chdir(test_dir.resolve())
         
-        expected_fastqs = ['bad_q_good_l.read1.fq', 'bad_q_long_l.read2.fq', 'good_q_good_l.read1.fq', 'good_q_long_l.read2.fq',
-                           'bad_q_good_l.read2.fq',  'bad_q_short_l.read1.fq',  'good_q_good_l.read2.fq',  'good_q_short_l.read1.fq',
-                           'bad_q_long_l.read1.fq',  'bad_q_short_l.read2.fq', 'good_q_long_l.read1.fq',  'good_q_short_l.read2.fq']
+        expected_fastqs = [Path('bad_q_good_l.read1.fq'), Path('bad_q_long_l.read2.fq'), Path('good_q_good_l.read1.fq'), Path('good_q_long_l.read2.fq'),
+                           Path('bad_q_good_l.read2.fq'),  Path('bad_q_short_l.read1.fq'),  Path('good_q_good_l.read2.fq'),  Path('good_q_short_l.read1.fq'),
+                           Path('bad_q_long_l.read1.fq'),  Path('bad_q_short_l.read2.fq'), Path('good_q_long_l.read1.fq'),  Path('good_q_short_l.read2.fq')]
         testing = fastqc.make_list_of_fastqs()
         
         self.assertEqual(expected_fastqs,testing)
