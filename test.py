@@ -14,10 +14,14 @@ class TestFastQCMethods(unittest.TestCase):
         self.assertTrue(test_dir.exists() and test_dir.is_dir())
 
     def test_make_list_of_fastqs(self):
+        cwd = Path('.')
+        test_dir = cwd.joinpath('test_fastq_files')
         expected_fastqs = ['bad_q_good_l.read1.fq', 'bad_q_long_l.read2.fq', 'good_q_good_l.read1.fq', 'good_q_long_l.read2.fq',
                            'bad_q_good_l.read2.fq',  'bad_q_short_l.read1.fq',  'good_q_good_l.read2.fq',  'good_q_short_l.read1.fq',
                            'bad_q_long_l.read1.fq',  'bad_q_short_l.read2.fq', 'good_q_long_l.read1.fq',  'good_q_short_l.read2.fq']
-        self.assertTrue(True)
+        testing = fastqc.make_list_of_fastqs
+        
+        self.assertEqual(expected_fastqs,testing)
 
     def test_calculate_average_quality_score(self):
         self.assertTrue(True)
