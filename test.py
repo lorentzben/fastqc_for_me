@@ -9,6 +9,7 @@ class TestFastQCMethods(unittest.TestCase):
         self.cwd = Path('.')
 
     def test(self):
+        cwd = Path('.')
         test_dir = cwd / 'test_fastq_files'
         assertTrue(test_dir.exists() and test_dir.is_dir())
 
