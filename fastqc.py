@@ -166,8 +166,6 @@ def main(args):
     check_quality_cutoffs(table)
     
 
-# pathlib package
-# logging more intensly
 
 
 if __name__ == "__main__":
