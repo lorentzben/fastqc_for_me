@@ -22,6 +22,8 @@ class TestFastQCMethods(unittest.TestCase):
                            Path('bad_q_good_l.read2.fq'),  Path('bad_q_short_l.read1.fq'),  Path('good_q_good_l.read2.fq'),  Path('good_q_short_l.read1.fq'),
                            Path('bad_q_long_l.read1.fq'),  Path('bad_q_short_l.read2.fq'), Path('good_q_long_l.read1.fq'),  Path('good_q_short_l.read2.fq')]
         testing = fastqc.make_list_of_fastqs()
+        expected_fastqs.sort()
+        testing.sort()
         
         self.assertEqual(expected_fastqs,testing)
 
