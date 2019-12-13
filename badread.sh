@@ -29,4 +29,5 @@ sed -i 's/I/h/g' good_q_long_l.read2.fq
 wgsim -e0.2 -d 500 -1 100 -2 100 SAMN01911278.fastq bad_q_short_l.read1.fq bad_q_short_l.read2.fq /dev/null
 #Bad quality long len
 wgsim -e0.2 -d 500 -1 300 -2 300 SAMN01911278.fastq bad_q_long_l.read1.fq bad_q_long_l.read2.fq /dev/null
+rm SAMN01911278.fastq
 } 2>&1 | tee test_setup.log
