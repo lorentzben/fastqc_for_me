@@ -38,7 +38,7 @@ logger.addHandler(console_logger)
 
 # creates a list with path to fastq files in current dir
 
-
+#TODO not have nested for loops like a chump 
 def make_list_of_fastqs():
     current_dir = Path('.')
     fastqs = list(current_dir.glob('*.f*q'))
@@ -63,7 +63,7 @@ def calculate_average_quality_score(files):
     for score in average_qual_scores:
         if score[1] >= 20:
             logger.info(
-                "All .fastq reads examined are over phread score of 20")
+                ".fastq read examined was over phread score of 20")
             pass
         else:
             logger.warning(

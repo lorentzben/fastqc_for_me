@@ -28,6 +28,13 @@ class TestFastQCMethods(unittest.TestCase):
         self.assertEqual(expected_fastqs,testing)
 
     def test_calculate_average_quality_score(self):
+        cwd = Path('.')
+        test_dir = cwd.joinpath('test_fastq_files')
+        os.chdir(test_dir.resolve())
+        table = fastqc.make_list_of_fastqs()
+        expected_quals= []
+
+        testing = fastqc.calculate_average_quality_score(table)
         self.assertTrue(True)
 
     def test_calculate_num_reads(self):
