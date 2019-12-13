@@ -35,5 +35,5 @@ class TestFastQCMethods(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.setUp()
+    setUp()
     unittest.main()
