@@ -8,8 +8,7 @@ class TestFastQCMethods(unittest.TestCase):
         os.chdir('/home/blorentz/LorentzThesis19/fastqc_for_me/test_fastq_files')
 
     def test(self):
-        self.assertTrue(
-            os.cwd(), '/home/blorentz/LorentzThesis19/fastqc_for_me/test_fastq_files')
+        self.assertEqual(os.cwd(), '/home/blorentz/LorentzThesis19/fastqc_for_me/test_fastq_files')
 
     def test_make_list_of_fastqs(self):
         expected_fastqs = ['bad_q_good_l.read1.fq', 'bad_q_long_l.read2.fq', 'good_q_good_l.read1.fq', 'good_q_long_l.read2.fq',
