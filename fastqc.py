@@ -38,7 +38,7 @@ logger.addHandler(console_logger)
 
 # creates a list with path to fastq files in current dir
 
-#TODO not have nested for loops like a chump 
+
 def make_list_of_fastqs():
     current_dir = Path('.')
     fastqs = list(current_dir.glob('*.f*q'))
@@ -154,7 +154,6 @@ def check_quality_cutoffs(table):
         
 def main(args):
     set_up_logger(args.quiet)
-    logger.critical("validate that the qual check is working")
     files = make_list_of_fastqs()
     quality = calculate_average_quality_score(files)
     num_reads = calculate_num_reads(files)
