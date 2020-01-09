@@ -146,11 +146,11 @@ def check_quality_cutoffs(table):
         logger.debug(item)
         
         if float(item[1]) <= 20:
-            logging.warning("quality score of %i is less than 20" % str(item[0]))
+            logging.warning("quality score of " +str(item[0])+" is less than 20")
         if (float(item[3]) < 150):
-             logging.warning("quality read len of %s is under 150" % str(item[0]))
+             logging.warning("quality read len of " +str(item[0])+ " is under 150")
         if (float(item[3]) > 200):
-            logging.warning("quality read len of %g is over 200" % str(item[0]))
+            logging.warning("quality read len of " +str(item[0])+" is over 200")
         
 def main(args):
     set_up_logger(args.quiet)
