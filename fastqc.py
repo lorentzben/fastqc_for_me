@@ -42,7 +42,7 @@ logger.addHandler(console_logger)
 def make_list_of_fastqs():
     current_dir = Path('.')
     fastqs = list(current_dir.glob('*.f*q'))
-    logger.info("The fastq files found are: " + str(fastqs))
+    loggerb("The fastq files found are: " + str(fastqs))
     return fastqs
 
 
@@ -146,11 +146,11 @@ def check_quality_cutoffs(table):
         logger.debug(item)
         
         if float(item[1]) <= 20:
-            logging.warning("quality score of %i is less than 20" % item[0])
+            logging.warning("quality score of %i is less than 20" % str(item[0]))
         if (float(item[3]) < 150):
-             logging.warning("quality read len of %s is under 150" % item[0])
+             logging.warning("quality read len of %s is under 150" % str(item[0]))
         if (float(item[3]) > 200):
-            logging.warning("quality read len of %g is over 200" % item[0])
+            logging.warning("quality read len of %g is over 200" % str(item[0]))
         
 def main(args):
     set_up_logger(args.quiet)
