@@ -98,9 +98,9 @@ def parse_fastq():
     #logger.debug(temper_name[1])
     #logger.debug(temp_seq)
     #logger.debug(temp_len)
-    name = temp_name.split('\t',1).strip()
-    seq = temp_seq.split('\t',1).strip()
-    length = temp_len.split('\t',1).strip()     
+    name = temp_name.split('\t')
+    seq = temp_seq.split('\t')
+    length = temp_len.split('\t')  
     temp_name = name[1]
     temp_seq = seq[1]
     temp_len = length[1]
