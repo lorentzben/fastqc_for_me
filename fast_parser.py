@@ -114,7 +114,7 @@ def main(args):
     logger.info(table)
     with open ("output.txt",'w') as filehandle:
         for line in table:
-            filehandle.write(line)
+            filehandle.write(str(line))
     #print(table)
 
 
