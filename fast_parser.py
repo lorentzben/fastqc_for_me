@@ -95,9 +95,9 @@ def parse_fastq():
     quals = numpy.loadtxt(base, delimiter='\t',usecols=[1])
     temp_qual = numpy.mean(quals)
     #print(temp_name)
-    temp_name.split('\t',1).strip()
-    temp_seq.split('\t',1).strip()
-    temp_len.split('\t',1).strip()     
+    str(temp_name).split('\t',1).strip()
+    str(temp_seq).split('\t',1).strip()
+    str(temp_len).split('\t',1).strip()     
     logger.debug("processed file")
     result = tuple([tuple([temp_name,temp_seq]),tuple([temp_len,temp_qual])])
     return result
@@ -110,6 +110,10 @@ def main(args):
     files = create_file_struct()
     table = create_result_table(files)
     logger.info(table)
+    with open ("output.txt",'w') as filehandle:
+        for line in table:
+            filehandle.write(line)
+    #print(table)
 
 
 if __name__ == "__main__":
