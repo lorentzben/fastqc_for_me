@@ -56,7 +56,7 @@ def create_result_table(results_to_process):
         os.chdir(directory)
         result = parse_fastq()
         #result = tuple([tuple([Kelly001,116603]),tuple([301, 36])])
-        seq_name = result[0][0]
+        seq_name = result[0][0].strip
         tot_seq = result[0][1]
         seq_len = result[1][0]
         mean_qual = result[1][1]
@@ -94,7 +94,7 @@ def parse_fastq():
     quals = numpy.loadtxt(base, delimiter='\t',usecols=[1])
     temp_qual = numpy.mean(quals)
     #print(temp_name)
-    logger.debug(temp_name)
+    logger.debug(temp_name.strip('\t',1).strip())
     logger.debug(temp_seq)
     logger.debug(temp_len)
     #temp_name.split('\t',1).strip()
