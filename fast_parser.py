@@ -94,7 +94,7 @@ def parse_fastq():
     quals = numpy.loadtxt(base, delimiter='\t',usecols=[1])
     temp_qual = numpy.mean(quals)
     #print(temp_name)
-    logger.debug(temp_name.split('\t',1).strip())
+    logger.debug(temp_name.split('\t',1))
     logger.debug(temp_seq)
     logger.debug(temp_len)
     #temp_name.split('\t',1).strip()
