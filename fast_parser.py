@@ -101,9 +101,9 @@ def parse_fastq():
     name = temp_name.split('\t')
     seq = temp_seq.split('\t')
     length = temp_len.split('\t')  
-    temp_name = name[1]
-    temp_seq = seq[1]
-    temp_len = length[1]
+    temp_name = name[1].strip()
+    temp_seq = seq[1].strip()
+    temp_len = length[1].strip()
     #logger.debug("processed file")
     result = tuple([tuple([temp_name,temp_seq]),tuple([temp_len,temp_qual])])
     return result
