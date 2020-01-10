@@ -44,7 +44,7 @@ def create_file_struct():
     results_to_process = []
     for item in q.iterdir():
         if item.is_dir():
-            logger.debug(item)
+            logger.debug("dir found: %s" % item)
             results_to_process.append(item)
     return results_to_process
  
@@ -53,7 +53,6 @@ def create_result_table(results_to_process):
     z = Path.cwd()
     result_table = []
     for directory in results_to_process:
-        logger.debug(Path.cwd())
         os.chdir(directory)
         result = parse_fastq()
         #result = tuple([tuple([Kelly001,116603]),tuple([301, 36])])
@@ -95,10 +94,13 @@ def parse_fastq():
     quals = numpy.loadtxt(base, delimiter='\t',usecols=[1])
     temp_qual = numpy.mean(quals)
     #print(temp_name)
-    str(temp_name).split('\t',1).strip()
-    str(temp_seq).split('\t',1).strip()
-    str(temp_len).split('\t',1).strip()     
-    logger.debug("processed file")
+    logger.debug(temp_name)
+    logger.debug(temp_seq)
+    logger.debug(temp_len)
+    #temp_name.split('\t',1).strip()
+    #temp_seq.split('\t',1).strip()
+    #temp_len.split('\t',1).strip()     
+    #logger.debug("processed file")
     result = tuple([tuple([temp_name,temp_seq]),tuple([temp_len,temp_qual])])
     return result
 
