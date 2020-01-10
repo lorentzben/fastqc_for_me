@@ -94,9 +94,10 @@ def parse_fastq():
     base = numpy.delete(base_table,0,0)
     quals = numpy.loadtxt(base, delimiter='\t',usecols=[1])
     temp_qual = numpy.mean(quals)
-    temp_name.split('\t',1).strip()
-    temp_seq.split('\t',1).strip()
-    temp_len.split('\t',1).strip()     
+    print(temp_name)
+    #temp_name.split('\t',1).strip()
+    #temp_seq.split('\t',1).strip()
+    #temp_len.split('\t',1).strip()     
     logger.debug("processed file")
     result = tuple([tuple([temp_name,temp_seq]),tuple([temp_len,temp_qual])])
     return result
