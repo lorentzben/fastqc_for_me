@@ -56,7 +56,7 @@ def create_result_table(results_to_process):
         logger.debug(Path.cwd())
         os.chdir(directory)
         parse_fastq()
-        result = tuple([tuple([Kelly001,116603]),tuple([301, 36])])
+        #result = tuple([tuple([Kelly001,116603]),tuple([301, 36])])
         seq_name = result[0][0]
         tot_seq = result[0][1]
         seq_len = result[1][0]
