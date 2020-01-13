@@ -153,8 +153,6 @@ if __name__ == "__main__":
         description="Perform Automated Analysis and Formatting of Sequence Data")
     parser.add_argument('-n', action='store', required=True,
                         help="name for fastqc output dir", dest='dir_name')
-    parser.add_argument('-f', action='store_true', default=False,
-                        help="writes the parsed information to a .csv file which can be opened in R or excel", dest='to_file')
     parser.add_argument('-c', action='store_true', default=True,
                         help="writes the parsed information to console in a way that is easier to read than the log file format", dest='console')
     parser.add_argument('-q', '--quiet', action='store_true', default=False,
