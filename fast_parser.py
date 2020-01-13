@@ -90,21 +90,34 @@ def parse_fastq():
             temp_seq = line
         elif re.match("(.*)Sequence length(.*)",line):
             temp_len = line
+
+    logger.debug(temp_name)
+    logger.debug(temp_seq)
+    logger.debug(temp_len)
+
+    #editing the base table to remove heading and then format in a manner to calc mean
     base = numpy.delete(base_table,0,0)
     quals = numpy.loadtxt(base, delimiter='\t',usecols=[1])
     temp_qual = numpy.mean(quals)
-    #print(temp_name)
-    #temper_name = temp_name.split('\t')
-    #logger.debug(temper_name[1])
-    #logger.debug(temp_seq)
-    #logger.debug(temp_len)
+
     name = temp_name.split('\t')
     seq = temp_seq.split('\t')
-    length = temp_len.split('\t')  
+    length = temp_len.split('\t')
+
+    logger.debug(name)
+    logger.debug(seq)
+    logger.debug(length)
+
     temp_name = name[1].strip()
     temp_seq = seq[1].strip()
     temp_len = length[1].strip()
-    #logger.debug("processed file")
+
+    logger.debug(temp_name)
+    logger.debug(temp_seq)
+    logger.debug(temp_len)
+    
+    logger.debug("processed file")
+
     result = tuple([tuple([temp_name,temp_seq]),tuple([temp_len,temp_qual])])
     return result
 
