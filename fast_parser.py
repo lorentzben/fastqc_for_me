@@ -60,8 +60,8 @@ def create_result_table(results_to_process):
         tot_seq = result[0][1]
         seq_len = result[1][0]
         mean_qual = result[1][1]
-        logger.debug([seq_name,tot_seq,seq_name,mean_qual])
-        result_table.append([seq_name,tot_seq,seq_name,mean_qual])
+        logger.debug([seq_name,tot_seq,seq_len,mean_qual])
+        result_table.append([seq_name,tot_seq,seq_len,mean_qual])
     return result_table
 
 def parse_fastq():
