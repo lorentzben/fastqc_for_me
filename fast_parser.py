@@ -21,7 +21,7 @@ file_logger.setLevel(logging.DEBUG)
 # Logging handler which logs less
 console_logger = logging.StreamHandler()
 
-
+#based on args flag, 
 def set_up_logger(quiet):
     if quiet:
         console_logger.setLevel(logging.WARNING)
@@ -39,7 +39,7 @@ console_logger.setFormatter(formatter)
 logger.addHandler(file_logger)
 logger.addHandler(console_logger)
 
-
+#finds out how many files/dirs exist
 def create_file_struct():
     q = Path.cwd()
     results_to_process = []
@@ -49,7 +49,7 @@ def create_file_struct():
             results_to_process.append(item)
     return results_to_process
 
-
+#goes into each samples subdirs and calls the parse fastq result function, then returns a result table 
 def create_result_table(results_to_process):
     z = Path.cwd()
     result_table = []
@@ -65,7 +65,7 @@ def create_result_table(results_to_process):
         result_table.append([seq_name, tot_seq, seq_len, mean_qual])
     return result_table
 
-
+#goes intot the fastq folder pulls out the nessecary stats and returns it to create result table
 def parse_fastq():
     temp_name = ''
     temp_seq = ''
@@ -73,6 +73,7 @@ def parse_fastq():
     temp_qual = ''
     parse = False
     base_table = []
+    #only pulls the base table since it is more than one line long
     with open('fastqc_data.txt') as f:
         for line in f:
             if line.startswith('>>END_MODULE'):
@@ -85,6 +86,7 @@ def parse_fastq():
                 continue
     with open('fastqc_data.txt') as p:
         data = p.readlines()
+    #pulls only one line so must pass through the whole file twice
     for line in data:
         if re.match("(.*)Filename(.*)", line):
             temp_name = line
@@ -102,6 +104,7 @@ def parse_fastq():
     quals = numpy.loadtxt(base, delimiter='\t', usecols=[1])
     fin_qual = numpy.mean(quals)
 
+    #formats the text since it has naming next to numbers
     name = temp_name.split('\t')
     seq = temp_seq.split('\t')
     length = temp_len.split('\t')
@@ -110,6 +113,7 @@ def parse_fastq():
     logger.debug(seq)
     logger.debug(length)
 
+    #final formatted variables
     fin_name = name[1].strip()
     fin_seq = float(seq[1].strip())
     fin_len = int(length[1].strip())
@@ -123,26 +127,19 @@ def parse_fastq():
     result = tuple([tuple([fin_name, fin_seq]), tuple([fin_len, fin_qual])])
     return result
 
-
+#function to print the result table to the console in a nice format
 def print_table_to_console(result_table):
     for line in result_table:
         print(*line)
 
-def save_table_to_csv(result_table):
-    with open("fastqc_result.csv", 'w') as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerows(result_table)
-
-
 def main(args):
     set_up_logger(args.quiet)
+    #Determines where the program started
     p = Path.cwd()
-    # TODO find out where we are
+    logger.debug("I am here: %s" %p)
     files = create_file_struct()
     table = create_result_table(files)
     logger.info(table)
-    if args.to_file:
-        save_table_to_csv(table)
     if args.console:
         print_table_to_console(table)
 
