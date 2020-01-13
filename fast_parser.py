@@ -112,9 +112,9 @@ def parse_fastq():
     fin_seq = float(seq[1].strip())
     fin_len = int(length[1].strip())
 
-    logger.debug(temp_name)
-    logger.debug(temp_seq)
-    logger.debug(temp_len)
+    logger.debug(fin_name)
+    logger.debug(fin_seq)
+    logger.debug(fin_len)
 
     logger.debug("processed file")
 
