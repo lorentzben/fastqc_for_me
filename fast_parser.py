@@ -143,7 +143,7 @@ def main(args):
     logger.info(table)
     if args.to_file:
         save_table_to_csv(table)
-    if arg.console:
+    if args.console:
         print_table_to_console(table)
 
 
