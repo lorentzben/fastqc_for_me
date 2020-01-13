@@ -142,6 +142,10 @@ def main(args):
     logger.info(table)
     if args.console:
         print_table_to_console(table)
+    os.chdir(p)
+    with open('fastq_output.csv','w') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(table)
 
 
 if __name__ == "__main__":
