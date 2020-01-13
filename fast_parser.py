@@ -147,7 +147,7 @@ def main(args):
 if __name__ == "__main__":
     # Build Argument Parser in order to facilitate ease of use for user
     parser = argparse.ArgumentParser(
-        description="Perform Automated Analysis and Formatting of Sequence Data")
+        description="Perform Automated Formatting of Sequence Data")
     parser.add_argument('-n', action='store', required=True,
                         help="name for fastqc output dir", dest='dir_name')
     parser.add_argument('-c', action='store_true', default=True,

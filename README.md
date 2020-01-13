@@ -1,6 +1,6 @@
 FastQC For Me
 -------------------------------------------------
-Quality control is an integral step in 16s analysis. It is important to ensure that quality data is being analysed. Tools such as fastQC do make quality control easier, however there is not a native way to have a human and machine readable result for a project's worth of samples. This script aims to produce a folder of human readable html documents, as well as a machine readable table of stats based on the fastqc run on a folder of fastq files, to aid in downstream analysis.
+Quality control is an integral step in 16s analysis. It is important to ensure that quality data is being analysed. Tools such as fastQC do make quality control easier, however there is not a native way to have a human and machine readable result for a project's worth of samples. This script aims to produce a human-readable table of statistics from a folder of fastqc data. 
 ## Prerequisities
 * Linux
 * Python 3 (installed and in path)
@@ -12,30 +12,45 @@ Quality control is an integral step in 16s analysis. It is important to ensure t
 ```shell
 $ git clone git@github.com:lorentzben/fastqc_for_me.git
 ```
-TODO fill out what else will be in here
-After cloning a folder called fastqc_for_me will be created. Inside will be this README and fastqc.py
+After cloning a folder called fastqc_for_me will be created. Inside will be this README and fast_parser.py
 
 ## Help
 ```shell
-$ python3 fastqc.py -h 
+$ python3 fast_parser.py -h
+usage: fast_parser.py [-h] -n DIR_NAME [-c] [-q] [-v]
+
+Perform Automated Analysis and Formatting of Sequence Data
+
+optional arguments:
+  -h, --help     show this help message and exit
+  -n DIR_NAME    name for fastqc output dir
+  -c             writes the parsed information to console in a way that is
+                 easier to read than the log file format
+  -q, --quiet    Reduces the amount of text printed to terminal, check
+                 logfiles more often
+  -v, --version  show program's version number and exit
 
 ```
 
 
 ## Running 
 ```shell
-$ chmod +x unpack_illumina.py
-$ python3 unpack_illumina.py -n NAME
+$chmod +x fast_parser.py
+$ ./fastqc PROJECTNAME* --outdir=PROJECTNAME_data --extract
+$ cd PROJECTNAME_data
+$ python3 fast_parser.py -n NAME -c
 ```
-Ensure that the name of the nested folder from basespace The results of analysis will be placed ____ 
-
-TODO fill in where this location is
-
+Ensure that the unpack illumina 
 
 ## Output
-TODO fill in names
+```shell
+Kelly003-NPS3_S87_L001_R1_001.fastq 107119.0 301 34.36016259816598
+Kelly005-NPS5_S89_L001_R1_001.fastq 122292.0 301 34.28974008207934
+```
+example output where the columns are:
+FILENAME SEQUENCE_COUNT SEQUENCE_LEN AVERAGE_QUAL_SCORE
 
-Inside of the directory ______there will be _______
+this table is also written in the fast_parser.log 
 
 ## Current Files
 * fastqc.py
@@ -47,12 +62,3 @@ Inside of the directory ______there will be _______
 ## Author
 * Ben Lorentz
 
-## Future Plans
-* Call fastqc on all .fastq files in directory
-* Move resultant html files into one output dir
-* Parse txt files for average read len and average quality score
-* Determine cutoffs for qual score and read len
-* Create tsv file and python object (json dump) of machine readble reults
-* Implememt unit testing using the unittest package
-* Implememnt logging at info and debugging levels
-* Move final files into a output directory 
