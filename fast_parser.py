@@ -57,9 +57,9 @@ def create_result_table(results_to_process):
         result = parse_fastq()
         #result = tuple([tuple([Kelly001,116603]),tuple([301, 36])])
         seq_name = result[0][0].strip()
-        tot_seq = result[0][1].strip()
-        seq_len = result[1][0].strip()
-        mean_qual = result[1][1].strip()
+        tot_seq = result[0][1]
+        seq_len = result[1][0]
+        mean_qual = result[1][1]
         logger.debug([seq_name,tot_seq,seq_name,mean_qual])
         result_table.append([seq_name,tot_seq,seq_name,mean_qual])
     return result_table
@@ -108,9 +108,9 @@ def parse_fastq():
     logger.debug(seq)
     logger.debug(length)
 
-    temp_name = name[1].strip()
-    temp_seq = seq[1].strip()
-    temp_len = length[1].strip()
+    fin_name = name[1].strip()
+    fin_seq = float(seq[1].strip())
+    fin_len = int(length[1].strip())
 
     logger.debug(temp_name)
     logger.debug(temp_seq)
@@ -118,7 +118,7 @@ def parse_fastq():
 
     logger.debug("processed file")
 
-    result = tuple([tuple([temp_name,temp_seq]),tuple([temp_len,temp_qual])])
+    result = tuple([tuple([fin_name,fin_seq]),tuple([fin_len,fin_qual])])
     return result
 
 
