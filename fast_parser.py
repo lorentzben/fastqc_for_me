@@ -98,7 +98,7 @@ def parse_fastq():
     #editing the base table to remove heading and then format in a manner to calc mean
     base = numpy.delete(base_table,0,0)
     quals = numpy.loadtxt(base, delimiter='\t',usecols=[1])
-    temp_qual = numpy.mean(quals)
+    fin_qual = numpy.mean(quals)
 
     name = temp_name.split('\t')
     seq = temp_seq.split('\t')
