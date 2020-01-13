@@ -11,6 +11,7 @@ import json
 import codecs
 import re
 from itertools import takewhile
+import csv
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -47,7 +48,7 @@ def create_file_struct():
             logger.debug("dir found: %s" % item)
             results_to_process.append(item)
     return results_to_process
- 
+
 
 def create_result_table(results_to_process):
     z = Path.cwd()
@@ -60,9 +61,10 @@ def create_result_table(results_to_process):
         tot_seq = result[0][1]
         seq_len = result[1][0]
         mean_qual = result[1][1]
-        logger.debug([seq_name,tot_seq,seq_len,mean_qual])
-        result_table.append([seq_name,tot_seq,seq_len,mean_qual])
+        logger.debug([seq_name, tot_seq, seq_len, mean_qual])
+        result_table.append([seq_name, tot_seq, seq_len, mean_qual])
     return result_table
+
 
 def parse_fastq():
     temp_name = ''
@@ -76,28 +78,28 @@ def parse_fastq():
             if line.startswith('>>END_MODULE'):
                 parse = False
             elif line.startswith('>>Per base sequence quality'):
-                parse= True
+                parse = True
             elif parse:
                 base_table.append(str(line))
-            else:  
+            else:
                 continue
     with open('fastqc_data.txt') as p:
         data = p.readlines()
     for line in data:
-        if re.match("(.*)Filename(.*)",line):
+        if re.match("(.*)Filename(.*)", line):
             temp_name = line
-        elif re.match("(.*)Total Sequences(.*)",line):
+        elif re.match("(.*)Total Sequences(.*)", line):
             temp_seq = line
-        elif re.match("(.*)Sequence length(.*)",line):
+        elif re.match("(.*)Sequence length(.*)", line):
             temp_len = line
 
     logger.debug(temp_name)
     logger.debug(temp_seq)
     logger.debug(temp_len)
 
-    #editing the base table to remove heading and then format in a manner to calc mean
-    base = numpy.delete(base_table,0,0)
-    quals = numpy.loadtxt(base, delimiter='\t',usecols=[1])
+    # editing the base table to remove heading and then format in a manner to calc mean
+    base = numpy.delete(base_table, 0, 0)
+    quals = numpy.loadtxt(base, delimiter='\t', usecols=[1])
     fin_qual = numpy.mean(quals)
 
     name = temp_name.split('\t')
@@ -118,21 +120,31 @@ def parse_fastq():
 
     logger.debug("processed file")
 
-    result = tuple([tuple([fin_name,fin_seq]),tuple([fin_len,fin_qual])])
+    result = tuple([tuple([fin_name, fin_seq]), tuple([fin_len, fin_qual])])
     return result
+
+
+def print_table_to_console(result_table):
+    for line in result_table:
+        print(*line)
+
+def save_table_to_csv(result_table):
+    with open("fastqc_result.csv", 'w') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerows(result_table)
 
 
 def main(args):
     set_up_logger(args.quiet)
     p = Path.cwd()
-    #TODO find out where we are
+    # TODO find out where we are
     files = create_file_struct()
     table = create_result_table(files)
     logger.info(table)
-    with open ("output.txt",'w') as filehandle:
-        for line in table:
-            filehandle.write(str(line))
-    #print(table)
+    if args.to_file:
+        save_table_to_csv(table)
+    if arg.console:
+        print_table_to_console(table)
 
 
 if __name__ == "__main__":
@@ -141,6 +153,10 @@ if __name__ == "__main__":
         description="Perform Automated Analysis and Formatting of Sequence Data")
     parser.add_argument('-n', action='store', required=True,
                         help="name for fastqc output dir", dest='dir_name')
+    parser.add_argument('-f', action='store_true', default=False,
+                        help="writes the parsed information to a .csv file which can be opened in R or excel", dest='to_file')
+    parser.add_argument('-c', action='store_true', default=True,
+                        help="writes the parsed information to console in a way that is easier to read than the log file format", dest='console')
     parser.add_argument('-q', '--quiet', action='store_true', default=False,
                         help="Reduces the amount of text printed to terminal, check logfiles more often", dest='quiet')
     parser.add_argument('-v', '--version', action='version',
