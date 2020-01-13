@@ -50,7 +50,7 @@ Kelly005-NPS5_S89_L001_R1_001.fastq 122292.0 301 34.28974008207934
 example output where the columns are:
 FILENAME SEQUENCE_COUNT SEQUENCE_LEN AVERAGE_QUAL_SCORE
 
-this table is also written in the fast_parser.log 
+this table is also written in the fastq_output.csv
 
 ## Current Files
 * fastqc.py
