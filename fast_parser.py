@@ -145,8 +145,8 @@ def main(args):
     os.chdir(p)
     with open('fastq_output.csv','w') as csvfile:
         writer = csv.writer(csvfile)
-        #writer.writerow(table)
-        writer.writerows([['Filename','Number of Sequences','Lenght of Sequnences','Average Quality Score']]+[[a,b,c,d] for [a,b],[c,d] in table])
+        writer.writerows(table)
+        #writer.writerows([['Filename','Number of Sequences','Lenght of Sequnences','Average Quality Score']]+[[a,b,c,d] for [a,b],[c,d] in table])
 
 
 if __name__ == "__main__":
