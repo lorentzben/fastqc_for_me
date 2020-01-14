@@ -116,7 +116,7 @@ def parse_fastq():
     #final formatted variables
     fin_name = name[1].strip()
     fin_seq = round(float(seq[1].strip()),2)
-    fin_len = int(length[1].strip())
+    fin_len = length[1].strip()
 
     logger.debug(fin_name)
     logger.debug(fin_seq)
